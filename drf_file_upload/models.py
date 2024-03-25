@@ -63,8 +63,11 @@ class AnonymousUploadedFile(AbstractUploadedFile):
 
 
 def delete_file_if_exists(file):
-    if file and default_storage.exists(file.path):
-        default_storage.delete(file.path)
+    try:
+        if file and default_storage.exists(file.path):
+            default_storage.delete(file.path)
+    except Exception as e:
+        print(f"Error deleting file: {e}")
 
 
 def delete_file_on_change(model, instance):
